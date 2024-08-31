@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Box, Tabs, Tab, TextField, Button, InputAdornment } from '@mui/material';
+import { Modal, Box, Tabs, Tab, TextField, Button, InputAdornment, IconButton, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -62,6 +63,13 @@ const ConfigModal = ({ open, handleClose }) => {
           borderRadius: 2,
         }}
       >
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <Typography variant="h6">Configuration Settings</Typography>
+          <IconButton onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        
         <Tabs value={tabValue} onChange={handleTabChange} centered>
           <Tab label="Project Config" />
           <Tab label="User Config" />
