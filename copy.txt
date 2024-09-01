@@ -1,0 +1,125 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import HomePage from './HomePage';
+import ConfigPage from './ConfigPage';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/config" element={<ConfigPage />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+
+
+
+
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Box, Typography } from '@mui/material';
+
+function HomePage() {
+  const navigate = useNavigate();
+
+  const handleOpenConfig = () => {
+    navigate('/config');
+  };
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+      }}
+    >
+      <Typography variant="h4" gutterBottom>Home Page</Typography>
+      <Button variant="contained" color="primary" onClick={handleOpenConfig}>
+        Open Configuration Settings
+      </Button>
+    </Box>
+  );
+}
+
+export default HomePage;
+
+
+
+import React from 'react';
+import ConfigModal from './ConfigModal';
+import { useNavigate } from 'react-router-dom';
+
+function ConfigPage() {
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    navigate('/');
+  };
+
+  return (
+    <ConfigModal open={true} handleClose={handleClose} />
+  );
+}
+
+export default ConfigPage;
+
+
+
+import React, { useState } from 'react';
+import { Modal, Box, Tabs, Tab, TextField, Button, InputAdornment, IconButton, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import HomeIcon from '@mui/icons-material/Home';
+
+// TabPanel and renderTextField functions go here...
+
+const ConfigModal = ({ open, handleClose }) => {
+  const [tabValue, setTabValue] = useState(1);
+
+  // Same as before...
+
+  return (
+    <Modal open={open} onClose={handleClose}>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 500,
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          p: 2,
+          borderRadius: 2,
+        }}
+      >
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <Typography variant="h6">Configuration Settings</Typography>
+          <Box>
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+            <IconButton onClick={handleClose}>
+              <HomeIcon />
+            </IconButton>
+          </Box>
+        </Box>
+
+        <Tabs value={tabValue} onChange={(e, val) => setTabValue(val)} centered>
+          <Tab label="Project Config" />
+          <Tab label="User Config" />
+        </Tabs>
+
+        {/* TabPanels and fields go here... */}
+      </Box>
+    </Modal>
+  );
+};
+
+export default ConfigModal;
